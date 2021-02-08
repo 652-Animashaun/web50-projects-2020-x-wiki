@@ -1,0 +1,28 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    Encyclopedia
+{% endblock %}
+
+{% block body %}
+    <h1>Search Results</h1>
+    {% if results < 0 %}
+    <h1> your search returned {{results}}<h1>
+    	{% endif %}
+
+    <ul>
+        {% for entry in entries %}
+            <li><a href="{% url 'wiki:singlepage' entry %}"> {{ entry }}</a></li>
+        {% endfor %}
+    </ul>
+
+    <div>
+    	<h1>Search wiki</h1>
+    	<form action="{% url 'wiki:index' %}" method="POST">
+                    {% csrf_token %}
+                    {{ form }}
+                <input type="submit" name="">
+                </form>
+    </div>
+
+{% endblock %}

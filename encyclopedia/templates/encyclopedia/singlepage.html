@@ -1,0 +1,26 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    {{title}}
+{% endblock %}
+
+{% block body %}
+    <h1>{{title}}</h1>
+
+
+      <div>
+        
+            {{ markdown }}
+        
+    </div>
+
+    <div>
+    	
+    	
+    		<button><a href="{% url 'wiki:editEntry' title %}">Edit</a></button> 
+    	
+    		
+    	
+    </div>
+
+{% endblock %}
