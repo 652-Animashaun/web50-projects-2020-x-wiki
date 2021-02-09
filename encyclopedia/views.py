@@ -114,8 +114,6 @@ def editEntry(request, title):
 				"title":title,
 				"form": EditEntryForm(data)
 				})
-		
-
 
 
 def randomPage(request):
@@ -126,7 +124,6 @@ def randomPage(request):
 	return render(request, "encyclopedia/singlepage.html", {
 		"singleentry": entryMarkdown,
 		"title":title
-
 		})
 
 
