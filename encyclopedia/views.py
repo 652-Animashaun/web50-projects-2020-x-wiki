@@ -7,14 +7,6 @@ from django.http import HttpResponseRedirect
 
 from . import util
 
-topics = [
-('IT', 'IT'),
-('SoftwareDevelopment', 'SoftwareDevelopment'),
-('DataScience', 'DataScience'),
-('IoT', 'IoT'),
-('Data', 'Data'),
-('WebDev', 'WebDev')
-]
 
 class SearchForm(forms.Form):
     query = forms.CharField(label="search entry")
@@ -25,11 +17,6 @@ class EditEntryForm(forms.Form):
 class NewPageForm(forms.Form):
 	title = forms.CharField(label="Title", max_length=20)
 	content= forms.CharField(label="Body", widget=forms.Textarea, max_length=1000)
-	# topics= forms.MultipleChoiceField(
-	# 	label ="Select Topics",
-	# 	required= False,
-	# 	widget=forms.CheckboxSelectMultiple,
-	# 	choices= topics)
 
 
 
@@ -78,8 +65,8 @@ def singlepage(request, title):
 		entryMarkdown = markdown2.markdown(util.get_entry(title))
 		return render(request, "encyclopedia/singlepage.html", {
 
-		"singleentry": util.get_entry(title),
-		"markdown": entryMarkdown,
+		
+		"singleentry": entryMarkdown,
 		"title":title
 
 		})
@@ -133,31 +120,15 @@ def editEntry(request, title):
 
 def randomPage(request):
 	title = secrets.choice(util.list_entries())
+	entryMarkdown = markdown2.markdown(util.get_entry(title))
 
 	print(title)
 	return render(request, "encyclopedia/singlepage.html", {
-		"entries":util.list_entries(),
-		"singleentry": util.get_entry(title),
+		"singleentry": entryMarkdown,
 		"title":title
 
 		})
 
 
 
-
-# def search(request):
-
-# 	if request.method == "POST":
-# 		form = SearchForm(request.POST)
-
-# 		if form.is_valid():
-# 			query = form.cleaned_data["query"]
-
-# 			if query in list_entries():
-
-# 				return render(request, "encyclopedia/singlepage.html", {
-# 				"singleentry": util.get_entry(query)
-# 					})
-# 			else:
-# 				return HttpResponseRedirect(reverse("wiki:index"))
 

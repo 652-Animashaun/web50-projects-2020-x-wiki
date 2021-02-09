@@ -5,12 +5,10 @@
 {% endblock %}
 
 {% block body %}
-    <h1>{{title}}</h1>
 
 
       <div>
-        
-            {{ markdown }}
+        {{singleentry|safe}}
         
     </div>
 
