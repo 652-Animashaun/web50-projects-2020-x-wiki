@@ -12,8 +12,13 @@
     	
     	<form action="{% url 'wiki:editEntry' title %}" method="POST">
     		{% csrf_token %}
-    		{{form}}
-    		<input type="submit" name="submit">
+            <div class="form-group">
+                {{form}}
+            </div>
+            <div class="form-group">
+                <input type="submit" name="submit">
+            </div>
+    		
     	</form>
     		
     	

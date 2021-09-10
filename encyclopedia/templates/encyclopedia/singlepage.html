@@ -6,16 +6,19 @@
 
 {% block body %}
 
+<h2>{{message}}</h2>
+
 
       <div>
-        {{singleentry|safe}}
+        
+            {{ markdown|safe }} 
         
     </div>
 
     <div>
     	
     	
-    		<button><a href="{% url 'wiki:editEntry' title %}">Edit</a></button> 
+    		<button class=""><a href="{% url 'wiki:editEntry' title %}">Edit</a></button> 
     	
     		
     	

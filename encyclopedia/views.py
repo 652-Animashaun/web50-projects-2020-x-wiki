@@ -7,6 +7,14 @@ from django.http import HttpResponseRedirect
 
 from . import util
 
+topics = [
+('IT', 'IT'),
+('SoftwareDevelopment', 'SoftwareDevelopment'),
+('DataScience', 'DataScience'),
+('IoT', 'IoT'),
+('Data', 'Data'),
+('WebDev', 'WebDev')
+]
 
 class SearchForm(forms.Form):
     query = forms.CharField(label="search entry")
@@ -17,6 +25,11 @@ class EditEntryForm(forms.Form):
 class NewPageForm(forms.Form):
 	title = forms.CharField(label="Title", max_length=20)
 	content= forms.CharField(label="Body", widget=forms.Textarea, max_length=1000)
+	# topics= forms.MultipleChoiceField(
+	# 	label ="Select Topics",
+	# 	required= False,
+	# 	widget=forms.CheckboxSelectMultiple,
+	# 	choices= topics)
 
 
 
@@ -65,8 +78,8 @@ def singlepage(request, title):
 		entryMarkdown = markdown2.markdown(util.get_entry(title))
 		return render(request, "encyclopedia/singlepage.html", {
 
-		
-		"singleentry": entryMarkdown,
+		"singleentry": util.get_entry(title),
+		"markdown": entryMarkdown,
 		"title":title
 
 		})
@@ -80,15 +93,23 @@ def NewPage(request):
 		if form.is_valid():
 			# topics=form.cleaned_data['topics']
 			title=form.cleaned_data['title']
+
 			content=form.cleaned_data['content']
 
-			if title==util.get_entry(title):
-				pass
+			if util.get_entry(title) is not None:
+				return render(request, "encyclopedia/index.html", {
+		        "entries": util.list_entries(),
+		        "form": SearchForm(),
+		        "message":"Entry with title exists!"
 
-			util.save_entry(title, content)
+		    })
 
-			return HttpResponseRedirect(reverse("wiki:singlepage",
-					kwargs={'title':title}))
+			else:
+
+				util.save_entry(title, content)
+
+				return HttpResponseRedirect(reverse("wiki:singlepage",
+						kwargs={'title':title}))
 
 
 
@@ -114,6 +135,8 @@ def editEntry(request, title):
 				"title":title,
 				"form": EditEntryForm(data)
 				})
+		
+
 
 
 def randomPage(request):
@@ -122,10 +145,29 @@ def randomPage(request):
 
 	print(title)
 	return render(request, "encyclopedia/singlepage.html", {
-		"singleentry": entryMarkdown,
+		"entries":util.list_entries(),
+		"markdown": entryMarkdown,
+		"singleentry": util.get_entry(title),
 		"title":title
+
 		})
 
 
 
+
+# def search(request):
+
+# 	if request.method == "POST":
+# 		form = SearchForm(request.POST)
+
+# 		if form.is_valid():
+# 			query = form.cleaned_data["query"]
+
+# 			if query in list_entries():
+
+# 				return render(request, "encyclopedia/singlepage.html", {
+# 				"singleentry": util.get_entry(query)
+# 					})
+# 			else:
+# 				return HttpResponseRedirect(reverse("wiki:index"))
 

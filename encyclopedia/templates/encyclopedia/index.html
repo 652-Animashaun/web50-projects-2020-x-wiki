@@ -5,24 +5,25 @@
 {% endblock %}
 
 {% block body %}
+<h2>{{message}}</h2>
     <h1>All Pages</h1>
     {% if results < 0 %}
-    <h1> your search returned {{results}}<h1>
+    <h1> your search returned {{results}}</h1>
     	{% endif %}
 
-    <ul>
-        {% for entry in entries %}
-            <li><a href="{% url 'wiki:singlepage' entry %}"> {{ entry }}</a></li>
-        {% endfor %}
-    </ul>
-
-    <div>
-    	<h1>Search wiki</h1>
-    	<form action="{% url 'wiki:index' %}" method="POST">
-                    {% csrf_token %}
-                    {{ form }}
-                <input type="submit" name="">
-                </form>
+    <div class="container">
+        <div class="d-flex flex-column">
+            {% for entry in entries %}
+            <div class="p-2 title"><a  href="{% url 'wiki:singlepage' entry %}"> {{ entry }}</a></div>
+            {% endfor %}
+            
+        </div>
     </div>
+
+  
+        
+
+
+    
 
 {% endblock %}

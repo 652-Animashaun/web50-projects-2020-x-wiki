@@ -3,33 +3,54 @@
 <!DOCTYPE html>
 
 <html lang="en">
-    <head>
-        <title>{% block title %}{% endblock %}</title>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-        <link href="{% static 'encyclopedia/styles.css' %}" rel="stylesheet">
-    </head>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
+    <link href="{% static 'encyclopedia/styles.css' %}" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
     <body>
-        <div class="row">
-            <div class="sidebar col-lg-2 col-md-3">
-                <h2>Wiki</h2>
-               
-                <div>
-                    <a href="{% url 'wiki:index' %}">Home</a>
-                </div>
-                <div>
-                    <a href="{% url 'wiki:NewPage' %}">Create New Page</a>
-                </div>
-                <div>
+        <div class="container">
+            <div class="row">
+                <div class="sidebar col-lg-3 col-sm-12">
+                    <h1>Wiki</h1>
 
-                    <a href="{% url 'wiki:randomPage' %}">Random Page</a>
-                    
+                    <div class="col-sm-4 col-lg-12  navbutton">
+                        <a href="{% url 'wiki:index' %}">Home</a>
+                    </div>
+                    <div class="col-sm-4 col-lg-12 navbutton">
+                        <a href="{% url 'wiki:NewPage' %}">Create New Page</a>
+                    </div>
+                    <div class="col-sm-4 col-lg-12 navbutton">
+
+                        <a href="{% url 'wiki:randomPage' %}">Random Page</a>
+
+                    </div>
+                    <div class="">
+                        <div class="col-sm-12 d-flex justify-content-center clearfix">
+                        
+                        <form action="{% url 'wiki:index' %}" method="POST">
+                            {% csrf_token %}
+                            <div class="input-group d-flex justify-content-left">
+                                <input type="text" name="query" placeholder="Search">
+                            </div>
+                            
+                            <div class="col-12">
+                                <input class="btn btn-sm btn-dark" type="submit" name="">
+                            </div>
+                            
+                        </form>
+                    </div>
+                        
+                    </div>
+                    {% block nav %}
+                    {% endblock %}
                 </div>
-                {% block nav %}
-                {% endblock %}
-            </div>
-            <div class="main col-lg-10 col-md-9">
-                {% block body %}
-                {% endblock %}
+                <div class="main col-lg-8 col-sm-12">
+                    {% block body %}
+                    {% endblock %}
+                </div>
             </div>
         </div>
 

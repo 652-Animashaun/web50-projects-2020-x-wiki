@@ -31,8 +31,34 @@ textarea {
     background-color: #f0f0f0;
     height: 100vh;
     padding: 20px;
+    color: white;
 }
 
 .sidebar h2 {
     margin-top: 5px;
+}
+
+@media screen and (max-width: 600px) {
+    .navbutton {
+        float: left;
+        display: inline-block;
+        font-size: 1rem;
+        color: gray;
+    }
+    .sidebar {
+        height: 10vh;
+        background-color: black;
+        height: 30vh;
+        padding: 20px;
+        text-align:center;
+    }
+
+}
+
+.title a {
+
+    font-family: 'Roboto Mono', monospace;
+    font-size: 2em;
+    color: grey;
+
 }
